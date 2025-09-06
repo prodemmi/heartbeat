@@ -1,4 +1,4 @@
-FROM erlang:23 AS BUILD
+FROM erlang:27 AS BUILD
 
 WORKDIR /buildroot
 
