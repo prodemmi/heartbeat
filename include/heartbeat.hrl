@@ -1,0 +1,2 @@
+-record(history, {user_id :: integer(), online_at :: integer(), offline_at :: integer()}).
+-record(user, {id :: integer(), status :: online | offline, histories :: [#history{}]}).

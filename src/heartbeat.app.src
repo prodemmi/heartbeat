@@ -1,0 +1,19 @@
+{application, heartbeat, [
+    {description, "An OTP application"},
+    {vsn, "0.1.0"},
+    {registered, []},
+    {mod, {heartbeat_app, []}},
+    {applications, [
+        kernel,
+        stdlib,
+        mnesia,
+        lager,
+        jsx,
+        ranch,
+        cowboy
+    ]},
+    {env, []},
+    {modules, [heartbeat_app, heartbeat_sup, heartbeat_server, heartbeat_store, heal_handler, checkup_handler, heart_rhythm_handler]},
+    {licenses, ["Apache-2.0"]},
+    {links, []}
+ ]}.
