@@ -22,7 +22,6 @@ init(Req, State) ->
                         ValidUserId
                 end,
                 
-                %% heartbeat_store:checkup/1 returns a #user{} record directly
                 User = heartbeat_store:checkup(UserId),
                 JSON = jsx:encode(#{id => User#user.id,
                                     status => atom_to_binary(User#user.status, utf8)}),

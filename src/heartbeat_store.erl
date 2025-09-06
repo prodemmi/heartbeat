@@ -5,7 +5,7 @@
 -include("heartbeat.hrl").
 
 %%========================================================================
-%% init/0: ایجاد schema و جدول histories
+%% init/0: init mnesia
 %%========================================================================
 init() ->
     Node = node(),
@@ -33,7 +33,7 @@ init() ->
     end.
 
 %%========================================================================
-%% heal/1: اضافه کردن یا بروزرسانی آخرین رکورد history کاربر
+%% heal/1: updates user status to online
 %%========================================================================
 heal(UserId) ->
     Timestamp = erlang:system_time(seconds),
@@ -68,7 +68,7 @@ heal(UserId) ->
     mnesia:transaction(Fun).
 
 %%========================================================================
-%% checkup/1: بررسی وضعیت آنلاین/آفلاین کاربر
+%% checkup/1: gets user status
 %%========================================================================
 checkup(UserId) ->
     Now = erlang:system_time(seconds),
@@ -86,7 +86,6 @@ checkup(UserId) ->
                             true -> offline
                          end
                  end,
-             %% برگرداندن رکورد user برای هماهنگی با handler
              #user{id = UserId,
                    status = Status,
                    histories = Histories}
@@ -95,7 +94,7 @@ checkup(UserId) ->
     Result.
 
 %%========================================================================
-%% heart_rhythm/1: گرفتن تمام رکوردهای history یک کاربر
+%% heart_rhythm/1: gets all user history status
 %%========================================================================
 heart_rhythm(UserId) when is_integer(UserId) ->
     F = fun() ->
@@ -107,7 +106,6 @@ heart_rhythm(UserId) when is_integer(UserId) ->
         {atomic, []} ->
             {error, not_found};
         {atomic, Records} ->
-            %% Sort records by online_at timestamp
             SortedRecords = lists:keysort(#history.online_at, Records),
             {ok, SortedRecords};
         {aborted, {no_exists, _}} ->
