@@ -179,11 +179,11 @@ The service includes a benchmarking module (`heartbeat_bench.erl`) for performan
 
 ```erlang
 %% Simulate 100 users for 60 seconds
-heartbeat_bench:start(100, 60000).
+heartbeat_bench:start(100000, 60000).
 ```
 
 This will:
-- Create 100 concurrent user sessions
+- Create 100_000 concurrent user sessions
 - Each user calls `/heal` with randomized intervals
 - Monitor system resources and database growth
 
